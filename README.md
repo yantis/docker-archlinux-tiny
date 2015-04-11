@@ -1,7 +1,7 @@
 # archlinux-tiny
 
 On Docker hub [archlinux-tiny](https://registry.hub.docker.com/u/yantis/archlinux-tiny/)
-On Github [docker-archlinux-tiny](https://github.com/yantis/docker-archlinux-tiny)
+on Github [docker-archlinux-tiny](https://github.com/yantis/docker-archlinux-tiny)
 
 97 MB Arch Linux base container. The goal of this was to build an extremely small Arch Linux base without giving up any functionality.
 I used Les Aker's [dock0/arch](https://github.com/dock0/arch) as a foundation.
@@ -18,7 +18,6 @@ But you could swap out a few things for the busybox version of them and reduce t
 * [ArchAssault](https://www.archassault.org) repo for penetration testers and security professionals.
 * [BlackArch](http://blackarch.org) repo for penetration testers and security professionals.
 * [Arch Linux CN](https://github.com/archlinuxcn) repo 
-* [Hercura](http://repo.herecura.eu/herecura-stable/x86_64/) vim-tiny and other goodies.
 * user:docker password:docker
 * [Reflector] (https://wiki.archlinux.org/index.php/Reflector) mirror optimized for western USA.
 * cower and package-query for interacting with the AUR. 

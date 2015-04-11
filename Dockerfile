@@ -7,22 +7,24 @@
 FROM dock0/arch
 MAINTAINER Jonathan Yantis <yantis@yantis.net>
 
-RUN pacman -Syyu --noconfirm
+# ENV TERM xterm
+WORKDIR /tmp
 
-ENV TERM xterm
+RUN pacman -Syyu --noconfirm && \
 
-## Configure pacman
+    ## Configure pacman
 
     # Fix for failed: IPC connect call failed
-RUN dirmngr </dev/null > /dev/null 2>&1 && \
+    dirmngr </dev/null > /dev/null 2>&1 && \
 
     # Allow for colored output in pacman.conf
     sed -i "s/#Color/Color/" /etc/pacman.conf && \
 
     # Add hercula repo for vim-tiny
+    # Removed this even though it is nice because it blocks dockerhub
     # http://repo.herecura.eu/herecura-stable/x86_64/
-    echo "[herecura-stable]" >> /etc/pacman.conf && \
-    echo "Server = http://repo.herecura.be/herecura-stable/\$arch" >> /etc/pacman.conf && \
+    # echo "[herecura-stable]" >> /etc/pacman.conf && \
+    # echo "Server = http://repo.herecura.be/herecura-stable/\$arch" >> /etc/pacman.conf && \
 
     # Archlinux CN repo (has yaourt and sometimes other interesting tools)
     echo "[archlinuxcn]" >> /etc/pacman.conf && \
@@ -71,7 +73,6 @@ RUN pacman -S reflector --noconfirm && \
     pacman -Rs reflector --noconfirm
 
 # Reinstall openssl without a Perl dependency (This really isn't needed. Seriously)
-WORKDIR /tmp
     # Patch makepkg so we can run as it as root.
 RUN sed -i 's/EUID == 0/EUID == -1/' /usr/bin/makepkg && \
     pacman --noconfirm -S wget file patch binutils gcc autoconf make fakeroot && \
@@ -91,21 +92,17 @@ RUN useradd --create-home docker && \
 
     # Allow passwordedless sudo for now but we will remove it later.
     pacman --noconfirm -S sudo && \
-    echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+    echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
 
-# Switch to user docker to install AUR packages.
-USER docker
-
-# Replace texinfo with a fake textinfo so we can remove Perl
-RUN yaourt -Rdd --noconfirm texinfo && \
-    yaourt -S --noconfirm texinfo-fake && \
+    # Replace texinfo with a fake textinfo so we can remove Perl
+    runuser -l docker -c "yaourt --noconfirm -Rdd texinfo" && \
+    runuser -l docker -c "yaourt --noconfirm -S texinfo-fake" && \
 
     # Install localepurge
-    yaourt --noconfirm -S localepurge
-USER root
+    runuser -l docker -c "yaourt --noconfirm -S localepurge" && \
 
-# Configure localepurge
-RUN sed -i "s/NEEDSCONFIGFIRST/#NEEDSCONFIGFIRST/" /etc/locale.nopurge && \
+    # Configure localepurge
+    sed -i "s/NEEDSCONFIGFIRST/#NEEDSCONFIGFIRST/" /etc/locale.nopurge && \
     sed -i "s/#DONTBOTHERNEWLOCALE/DONTBOTHERNEWLOCALE/" /etc/locale.nopurge
 
 # Remove stuff we used for compliling packages since huge (219 mB)
@@ -158,7 +155,7 @@ RUN localepurge && \
     rm -r /usr/share/man/* && \
     rm -r /usr/share/doc/* && \
 
-    # Not sure about these yet need to keep testing.
+    # was a bit worried about these at first but I haven't seen an issue yet on them.
     rm -r /usr/share/zoneinfo/* && \
     rm -r /usr/share/i18n/* && \
 
@@ -180,5 +177,4 @@ RUN bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
 
 #########################################################################
 
-WORKDIR /
 CMD /usr/bin/bash
