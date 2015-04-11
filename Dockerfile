@@ -7,7 +7,7 @@
 FROM dock0/arch
 MAINTAINER Jonathan Yantis <yantis@yantis.net>
 
-# ENV TERM xterm
+ENV TERM xterm
 WORKDIR /tmp
 
 RUN pacman -Syyu --noconfirm && \
@@ -177,4 +177,5 @@ RUN bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
 
 #########################################################################
 
+WORKDIR /
 CMD /usr/bin/bash
