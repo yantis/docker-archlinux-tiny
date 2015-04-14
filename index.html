@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Docker-archlinux-tiny by yantis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Docker-archlinux-tiny</h1>
+      <h2 class="project-tagline">Ultra Small &lt; 100 MB Arch Linux (as well as ArchAssault, BlackArch, BBQLinux and more) base container. </h2>
+      <a href="https://github.com/yantis/docker-archlinux-tiny" class="btn">View on GitHub</a>
+      <a href="https://github.com/yantis/docker-archlinux-tiny/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/yantis/docker-archlinux-tiny/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="archlinux-tiny" class="anchor" href="#archlinux-tiny" aria-hidden="true"><span class="octicon octicon-link"></span></a>archlinux-tiny</h1>
+
+<p>On Docker hub <a href="https://registry.hub.docker.com/u/yantis/archlinux-tiny/">archlinux-tiny</a>
+on Github <a href="https://github.com/yantis/docker-archlinux-tiny">docker-archlinux-tiny</a></p>
+
+<p>97 MB Arch Linux base container. The goal of this was to build an extremely small Arch Linux base without giving up any functionality.
+I used Les Aker's <a href="https://github.com/dock0/arch">dock0/arch</a> as a foundation.
+I also added some amazing repos like <a href="https://www.archassault.org">ArchAssault</a>,
+<a href="http://blackarch.org">BlackArch</a> and <a href="http://bbqlinux.org">BBQLinux</a>.</p>
+
+<p>The goal was to maintain complete functionality so I did not swap out coreutils for busybox.
+But you could swap out a few things for the busybox version of them and reduce the size down another 20 MB or so.</p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Arch Linux 64 bit core, extra, community repos</li>
+<li>Arch Linux 32 bit multilib repo</li>
+<li>
+<a href="http://bbqlinux.org">BBQLinux</a> repo for Android Developers.</li>
+<li>
+<a href="https://www.archassault.org">ArchAssault</a> repo for penetration testers and security professionals.</li>
+<li>
+<a href="http://blackarch.org">BlackArch</a> repo for penetration testers and security professionals.</li>
+<li>
+<a href="https://github.com/archlinuxcn">Arch Linux CN</a> repo </li>
+<li>user:docker password:docker</li>
+<li>
+<a href="https://wiki.archlinux.org/index.php/Reflector">Reflector</a> mirror optimized for western USA.</li>
+<li>cower and package-query for interacting with the AUR. </li>
+<li>compact (removal of a lot of unneeded stuff that pacman will auto re-install if needed)</li>
+</ul>
+
+<p>As an example this is a search for chrome with the above repos installed:
+<img src="http://yantis-scripts.s3.amazonaws.com/screenshot_20150407-030717.jpg" alt=""></p>
+
+<h2>
+<a id="includes" class="anchor" href="#includes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Includes</h2>
+
+<ul>
+<li>acl 2.2.52-2</li>
+<li>archassault-keyring 20140202-3</li>
+<li>archassault-mirrorlist 20150214-1</li>
+<li>archlinux-keyring 20150212-1</li>
+<li>archlinuxcn-keyring 20141118-1</li>
+<li>attr 2.4.47-1</li>
+<li>bash 4.3.033-1</li>
+<li>bbqlinux-keyring 20131129-1</li>
+<li>blackarch-keyring 20140118-3</li>
+<li>bzip2 1.0.6-5</li>
+<li>ca-certificates 20140923-9</li>
+<li>ca-certificates-cacert 20140824-2</li>
+<li>ca-certificates-mozilla 3.18-3</li>
+<li>ca-certificates-utils 20140923-9</li>
+<li>coreutils 8.23-1</li>
+<li>cower 12-2</li>
+<li>cracklib 2.9.1-1</li>
+<li>curl 7.41.0-1</li>
+<li>e2fsprogs 1.42.12-2</li>
+<li>expat 2.1.0-4</li>
+<li>filesystem 2015.02-1</li>
+<li>findutils 4.4.2-6</li>
+<li>gawk 4.1.1-1</li>
+<li>gcc-libs 4.9.2-4</li>
+<li>glibc 2.21-2</li>
+<li>gmp 6.0.0-2</li>
+<li>gnupg 2.1.2-3</li>
+<li>gnutls 3.3.14-2</li>
+<li>gpgme 1.5.3-1</li>
+<li>iana-etc 2.30-4</li>
+<li>keyutils 1.5.9-1</li>
+<li>krb5 1.13.1-1</li>
+<li>libarchive 3.1.2-8</li>
+<li>libassuan 2.1.3-1</li>
+<li>libcap 2.24-2</li>
+<li>libffi 3.2.1-1</li>
+<li>libgcrypt 1.6.3-2</li>
+<li>libgpg-error 1.18-1</li>
+<li>libidn 1.30-1</li>
+<li>libksba 1.3.2-1</li>
+<li>libldap 2.4.40-2</li>
+<li>libsasl 2.1.26-7</li>
+<li>libssh2 1.4.3-2</li>
+<li>libtasn1 4.4-1</li>
+<li>libtirpc 0.2.5-1</li>
+<li>libutil-linux 2.26.1-3</li>
+<li>licenses 20140629-1</li>
+<li>linux-api-headers 3.18.5-1</li>
+<li>localepurge 0.7.3.4-1</li>
+<li>lzo 2.09-1</li>
+<li>mpfr 3.1.2.p11-1</li>
+<li>ncurses 5.9-7</li>
+<li>nettle 2.7.1-1</li>
+<li>npth 1.1-1</li>
+<li>openssl 1.0.2.a-1</li>
+<li>p11-kit 0.23.1-2</li>
+<li>package-query 1.5-2</li>
+<li>pacman 4.2.1-1</li>
+<li>pacman-mirrorlist 20150315-1</li>
+<li>pam 1.1.8-5</li>
+<li>pambase 20130928-1</li>
+<li>pinentry 0.9.0-1</li>
+<li>pth 2.0.7-5</li>
+<li>readline 6.3.006-1</li>
+<li>texinfo-fake 1.2-1</li>
+<li>tzdata 2015b-1</li>
+<li>xz 5.2.1-1</li>
+<li>yajl 2.1.0-1</li>
+<li>zlib 1.2.8-3</li>
+</ul>
+
+<h2>
+<a id="how-did-you-get-it-so-small" class="anchor" href="#how-did-you-get-it-so-small" aria-hidden="true"><span class="octicon octicon-link"></span></a>How did you get it so small.</h2>
+
+<p>The biggest win was the removal of Perl at 40MB. Perl is needed for two things on the base Arch Linux install
+OpenSSL (it shouldn't be honestly since it isn't really used other than for one small thing on Windows)
+Some other distros have already fixed this <a href="https://github.com/NixOS/nixpkgs/issues/6763">issue</a> like NixOS 
+Also, see this <a href="https://bbs.archlinux.org/viewtopic.php?id=73200">thread</a> and <a href="https://bugs.archlinux.org/task/14903">this</a>.
+And for <a href="http://www.gnu.org/software/texinfo">texinfo</a> (8 MB) which we patched out with a fake stub.</p>
+
+<p>As well as aggressively cleaning of info, doc and man pages as well as stripping out the non English international stuff.</p>
+
+<h2>
+<a id="caveats" class="anchor" href="#caveats" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caveats</h2>
+
+<p>This is slimmed down as much as possible while still having full pacman functionality to install any package needed.
+This is ment to be more of the lowest possible base to build upon. Try out one of my other Arch Linux versions if you want something more.</p>
+
+<p>Where it might break is all but the English locales have been removed, as well as any terminfo configs that are not xterm based.
+Do not expect any info, documents or manual pages to exist locally either as those have been purged as well.</p>
+
+<p>I am currently experimenting with the removal of zoneinfo and i18n and no problems so far.</p>
+
+<p>Anything you install with pacman should just install fine but if you want to install something from the AUR you are going to need
+to install dev tools first like make, gcc, autoconf etc.</p>
+
+<h2>
+<a id="miscellaneous" class="anchor" href="#miscellaneous" aria-hidden="true"><span class="octicon octicon-link"></span></a>Miscellaneous</h2>
+
+<p>To save on space the pacman databases are purged. You need run pacman -Sy at least once before using pacman.</p>
+
+<div class="highlight highlight-bash"><pre>RUN pacman -Sy</pre></div>
+
+<p>Most of the time pacman will install packages and dependencies just fine. Sometimes though it will say 
+"error: command failed to execute correctly " with a command not found message. That means you need to install a dependency.</p>
+
+<p>For example the git package uses groupadd and useradd which are both in the shadow package but you may not know that so to find it you can use the pkgfile tool.
+This will show you which package to install. In this case you would install the shadow package before installing git.</p>
+
+<div class="highlight highlight-bash"><pre>$ pacman -S pkgfile <span class="pl-k">&amp;&amp;</span> pkgfile --update
+$ pkgfile useradd
+core/shadow
+extra/bash-completion</pre></div>
+
+<p>This image has a user docker with the password docker. You will most likely want to change the password. Just add this line to your Dockerfile.</p>
+
+<div class="highlight highlight-bash"><pre>RUN <span class="pl-c1">echo</span> -e <span class="pl-s"><span class="pl-pds">"</span>docker\nyournewpassword<span class="pl-pds">"</span></span> <span class="pl-k">|</span> passwd docker</pre></div>
+
+<p>The mirrors are optimized for US West  If you want it for your area just add this to the top of your Dockerfile.</p>
+
+<div class="highlight highlight-bash"><pre>RUN pacman -S reflector --noconfirm <span class="pl-k">&amp;&amp;</span> \
+    reflector --verbose -l 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist <span class="pl-k">&amp;&amp;</span> \
+    pacman -Rs reflector --noconfirm</pre></div>
+
+<p>Included is cower and package-query for interacting with the AUR. You might want another one like
+<a href="https://wiki.archlinux.org/index.php/Yaourt">yaourt</a>. To install that just:</p>
+
+<div class="highlight highlight-bash"><pre>RUN pacman -S --noconfirm yaourt</pre></div>
+
+<p>The different repositories have a lot of really nice packages. To get a list just run package-query like this.</p>
+
+<div class="highlight highlight-bash"><pre>package-query -Sl archassault</pre></div>
+
+<p><img src="http://yantis-scripts.s3.amazonaws.com/screenshot_20150407-023220.jpg" alt=""></p>
+
+<h2>
+<a id="random-thoughts-stuff-that-you-could-do-that-wasnt-done" class="anchor" href="#random-thoughts-stuff-that-you-could-do-that-wasnt-done" aria-hidden="true"><span class="octicon octicon-link"></span></a>Random Thoughts (Stuff that you could do that wasn't done)</h2>
+
+<ul>
+<li>Tried converting coreutils to busybox. It just wasn't worth breaking GNU compatibility that pacman needs. 
+Try <a href="https://github.com/shingonoide/docker_archlinux-busybox">shingonoide's image</a> first before going this route to see if this works for you.</li>
+<li>The /etc/include directory contains 14 MB of header files. Those could get purged downstream if you knew you were never going to compile or update. Though if that was the case you could delete a whole lot more than that.</li>
+<li>You could remove linux-api-headers and get 3.3MB of space there but you would have to remember to re-install before any builds. </li>
+<li>One could remove the licenses package and get 1 MB. (ie: zip it up. Upload it and provide a link). I didn't mess with this for obvious reasons.</li>
+<li>glibc is a monster. You could look into using <a href="http://www.musl-libc.org/faq.html">musl</a> but in this case you should probably just use <a href="http://alpinelinux.org">Alpine Linux</a>
+</li>
+<li>/var/lib/pacman/local has 2.5MB in it that could be purged and restored with this <a href="https://bbs.archlinux.org/viewtopic.php?pid=670876">script</a>
+</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/yantis/docker-archlinux-tiny">Docker-archlinux-tiny</a> is maintained by <a href="https://github.com/yantis">yantis</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-61848149-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
+
