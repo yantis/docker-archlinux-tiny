@@ -16,6 +16,13 @@ But you could swap out a few things for the busybox version of them and reduce t
 
 >[yantis/archlinux-tiny](https://github.com/yantis/docker-archlinux-tiny)
 >>[yantis/archlinux-small](https://github.com/yantis/docker-archlinux-small)
+>>>[yantis/archlinux-small-ssh-hpn](https://github.com/yantis/docker-archlinux-ssh-hpn)
+>>>>[yantis/ssh-hpn-x](https://github.com/yantis/docker-ssh-hpn-x)
+>>>>>[yantis/filezilla](https://github.com/yantis/docker-filezilla)
+>>>>>[yantis/thunderbird](https://github.com/yantis/docker-thunderbird)
+>>>>>[yantis/dynamic-video](https://github.com/yantis/docker-dynamic-video)
+>>>>>>[yantis/virtualgl](https://github.com/yantis/docker-virtualgl)
+>>>>>>>[yantis/wine](https://github.com/yantis/docker-wine)
 
 
 ## Features 
