@@ -1,7 +1,7 @@
 ###########################################################
 # Dockerfile for custom Arch Linux base to be as small as possible
 #
-# Currently 97 MB
+# Currently 119 MB
 ############################################################
 
 FROM dock0/arch
@@ -141,7 +141,7 @@ RUN pacman --noconfirm -Rs  \
     iputils
 
 
-# Remove ducktape & shim & leftover mirrostatus.
+# Remove ducktape & shim & leftover mirrorstatus.
 RUN rm -r /.ducktape /.shim && \
     rm /tmp/.root.mirrorstatus.json
 
