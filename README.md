@@ -5,11 +5,12 @@ on Github [docker-archlinux-tiny](https://github.com/yantis/docker-archlinux-tin
 
 119 MB Arch Linux base container. The goal of this was to build an extremely small Arch Linux base without giving up any functionality.
 I used Les Aker's [dock0/arch](https://github.com/dock0/arch) as a foundation.
-I also added some amazing repos like [ArchAssault](https://www.archassault.org),
-[BlackArch](http://blackarch.org) and [BBQLinux](http://bbqlinux.org).
+I also added some amazing repos like [BlackArch](http://blackarch.org) and [BBQLinux](http://bbqlinux.org).
 
 The goal was to maintain complete functionality so I did not swap out coreutils for busybox.
 But you could swap out a few things for the busybox version of them and reduce the size down another 20 MB or so.
+
+11/21/2015 Update: Updated to the latest Arch Linux. Removed ArchAssault since no longer exists.
 
 8/1/2015 Update: The previous version was 97MB but some of the libraries really jumped in size.
 For example: libasan.so 1.2M -> 6.9M and libstdc++.so 1.5M -> 12M
@@ -30,7 +31,6 @@ For example: libasan.so 1.2M -> 6.9M and libstdc++.so 1.5M -> 12M
 * Arch Linux 64 bit core, extra, community repos
 * Arch Linux 32 bit multilib repo
 * [BBQLinux](http://bbqlinux.org) repo for Android Developers.
-* [ArchAssault](https://www.archassault.org) repo for penetration testers and security professionals.
 * [BlackArch](http://blackarch.org) repo for penetration testers and security professionals.
 * [Arch Linux CN](https://github.com/archlinuxcn) repo 
 * user:docker password:docker
