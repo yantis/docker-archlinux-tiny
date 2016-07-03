@@ -50,6 +50,10 @@ RUN pacman -Syyu --noconfirm && \
     sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman.d\/mirrorlist/ s/#//' /etc/pacman.conf && \
     sed -i 's/#\[multilib\]/\[multilib\]/g' /etc/pacman.conf && \
 
+    # Remove PGP Checks from dock0 amylum repo
+    # https://github.com/amylum/repo
+    sed -i 's/SigLevel = Required/SigLevel = Optional TrustAll/g' /etc/pacman.conf && \
+
     # Update and force a refresh of all package lists even if they appear up to date.
     pacman -Syyu --noconfirm && \
 
@@ -66,30 +70,17 @@ RUN pacman -S reflector --noconfirm && \
     reflector --verbose -l 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist && \
     pacman -Rs reflector --noconfirm
 
-# Reinstall openssl without a Perl dependency (This really isn't needed. Seriously)
-    # Patch makepkg so we can run as it as root.
-RUN sed -i 's/EUID == 0/EUID == -1/' /usr/bin/makepkg && \
-    pacman --noconfirm -S wget file patch binutils gcc autoconf make fakeroot && \
-    wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ssl3-test-failure.patch?h=packages/openssl" && \
-    wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ca-dir.patch?h=packages/openssl" && \
-    wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/no-rpath.patch?h=packages/openssl" && \
-    wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/PKGBUILD?h=packages/openssl" && \
-    sed -i "s/depends=('zlib' 'perl')/depends=('zlib')/" PKGBUILD && \
-    sed -i "s/make test//" PKGBUILD && \
-    makepkg --noconfirm -si --skippgpcheck && \
-
-    # Unpatch makepkg
-    sed -i 's/EUID == -1/EUID == 0/' /usr/bin/makepkg
-
 # Create new account that isn't root. user: docker password: docker
 RUN useradd --create-home docker && \
     echo -e "docker\ndocker" | passwd docker && \
 
     # Allow passwordedless sudo for now but we will remove it later.
-    pacman --noconfirm -S sudo && \
+    pacman --noconfirm -S sudo  && \
     echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
 
     # Replace texinfo with a fake textinfo so we can remove Perl
+
+    pacman --noconfirm -S wget file patch binutils gcc autoconf make fakeroot && \
     runuser -l docker -c "yaourt --noconfirm -Rdd texinfo" && \
     runuser -l docker -c "yaourt --noconfirm -S texinfo-fake" && \
 
@@ -100,22 +91,32 @@ RUN useradd --create-home docker && \
     sed -i "s/NEEDSCONFIGFIRST/#NEEDSCONFIGFIRST/" /etc/locale.nopurge && \
     sed -i "s/#DONTBOTHERNEWLOCALE/DONTBOTHERNEWLOCALE/" /etc/locale.nopurge
 
+# Reinstall openssl without a Perl dependency (This really isn't needed. Seriously)
+    # Patch makepkg so we can run as it as root.
+RUN sed -i 's/EUID == 0/EUID == -1/' /usr/bin/makepkg && \
+        wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ssl3-test-failure.patch?h=packages/openssl" && \
+        wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ca-dir.patch?h=packages/openssl" && \
+        wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/no-rpath.patch?h=packages/openssl" && \
+        wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/PKGBUILD?h=packages/openssl" && \
+        sed -i "s/depends=('perl')/depends=('pacman')/" PKGBUILD && \
+        sed -i "s/make test//" PKGBUILD && \
+        makepkg --noconfirm -si --skippgpcheck && \
+
+    # Unpatch makepkg
+    sed -i 's/EUID == -1/EUID == 0/' /usr/bin/makepkg
+
 # Remove stuff we used for compliling packages since huge (219 mB)
-RUN pacman --noconfirm -Rs  \
+RUN pacman --noconfirm -Runs  \
     binutils  \
     gcc \
     make \
     autoconf \
-    fakeroot \
     perl \
     yaourt \
     diffutils \
 
     # Remove other stuff
-    util-linux \
-    shadow \
     gzip \
-    tar \
     wget \
     file \
     patch \
@@ -135,10 +136,16 @@ RUN pacman --noconfirm -Rs  \
     # .73 MB
     iputils
 
+# Remove stuff that still needs subitems
+RUN pacman --noconfirm -R \
+    util-linux \
+    shadow \
+    fakeroot
+
 
 # Remove ducktape & shim & leftover mirrorstatus.
-RUN rm -r /.ducktape /.shim && \
-    rm /tmp/.root.mirrorstatus.json
+ RUN rm -r /.ducktape /.shim && \
+     rm /tmp/.root.mirrorstatus.json
 
 ##########################################################################
 # CLEAN UP SECTION - THIS GOES AT THE END                                #
@@ -163,11 +170,11 @@ RUN localepurge && \
     # Remove anything left in temp.
     rm -r /tmp/*
 
-RUN pacman -Rs --noconfirm sed grep
-
-RUN bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
+RUN pacman -S --noconfirm awk && \
+    bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
     paccache -rk0 >/dev/null 2>&1 &&  \
     pacman-optimize && \
+    pacman -Runs --noconfirm gawk tar && \
     rm -r /var/lib/pacman/sync/*
 
 #########################################################################

@@ -10,11 +10,6 @@ I also added some amazing repos like [BlackArch](http://blackarch.org) and [BBQL
 The goal was to maintain complete functionality so I did not swap out coreutils for busybox.
 But you could swap out a few things for the busybox version of them and reduce the size down another 20 MB or so.
 
-11/21/2015 Update: Updated to the latest Arch Linux. Removed ArchAssault since no longer exists.
-
-8/1/2015 Update: The previous version was 97MB but some of the libraries really jumped in size.
-For example: libasan.so 1.2M -> 6.9M and libstdc++.so 1.5M -> 12M
-
 
 ## Docker Images Structure
 
@@ -37,6 +32,9 @@ For example: libasan.so 1.2M -> 6.9M and libstdc++.so 1.5M -> 12M
 * [Reflector] (https://wiki.archlinux.org/index.php/Reflector) mirror optimized for western USA.
 * cower and package-query for interacting with the AUR. 
 * compact (removal of a lot of unneeded stuff that pacman will auto re-install if needed)
+
+7/2/2016 added but currently not taking advantage of it
+[Amylum] (https://github.com/amylum/repo) Arch packages primarily compiled statically and built against musl
 
 As an example this is a search for chrome with the above repos installed:
 ![](http://yantis-scripts.s3.amazonaws.com/screenshot_20150407-030717.jpg)
