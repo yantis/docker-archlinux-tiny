@@ -31,12 +31,6 @@ RUN pacman -Syyu --noconfirm && \
     echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf && \
     echo "Server = http://repo.archlinuxcn.org/\$arch" >> /etc/pacman.conf && \
 
-    # ArchAssault
-    echo "[archassault]" >> /etc/pacman.conf && \
-    echo "Server = http://repo.archassault.org/archassault/\$repo/os/\$arch" >> /etc/pacman.conf && \
-    pacman-key -r CC1D2606 && \
-    pacman-key --lsign CC1D2606 && \
-
     # BlackArch
     echo "[blackarch]" >> /etc/pacman.conf && \
     echo "Server = http://mirror.clibre.uqam.ca/blackarch/\$repo/os/\$arch" >> /etc/pacman.conf && \
@@ -60,7 +54,7 @@ RUN pacman -Syyu --noconfirm && \
     pacman -Syyu --noconfirm && \
 
     # Install all the repo keyrings and mirrorlists
-    pacman --noconfirm -S archlinuxcn-keyring archassault-keyring archassault-mirrorlist blackarch-keyring bbqlinux-keyring && \
+    pacman --noconfirm -S archlinuxcn-keyring blackarch-keyring bbqlinux-keyring && \
 
     # Install yaourt, package-query and cower for easy AUR usage.
     # TODO make sure package query still exists later after yaourt uninstall
