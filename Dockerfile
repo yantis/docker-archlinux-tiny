@@ -70,9 +70,10 @@ RUN pacman -S reflector --noconfirm && \
     # Patch makepkg so we can run as it as root.
 RUN sed -i 's/EUID == 0/EUID == -1/' /usr/bin/makepkg && \
     pacman --noconfirm -S wget file patch binutils gcc autoconf make fakeroot && \
-    wget --content-disposition "https://projects.archlinux.org/svntogit/packages.git/plain/trunk/ca-dir.patch?h=packages/openssl" && \
-    wget --content-disposition "https://projects.archlinux.org/svntogit/packages.git/plain/trunk/no-rpath.patch?h=packages/openssl" && \
-    wget --content-disposition "https://projects.archlinux.org/svntogit/packages.git/plain/trunk/PKGBUILD?h=packages/openssl" && \
+    wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ssl3-test-failure.patch?h=packages/openssl" && \
+    wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ca-dir.patch?h=packages/openssl" && \
+    wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/no-rpath.patch?h=packages/openssl" && \
+    wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/PKGBUILD?h=packages/openssl" && \
     sed -i "s/depends=('zlib' 'perl')/depends=('zlib')/" PKGBUILD && \
     sed -i "s/make test//" PKGBUILD && \
     makepkg --noconfirm -si --skippgpcheck && \
