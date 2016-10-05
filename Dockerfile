@@ -62,16 +62,16 @@ RUN pacman -Syyu --noconfirm && \
 
     # Install yaourt, package-query and cower for easy AUR usage.
     # TODO make sure package query still exists later after yaourt uninstall
-    pacman -S --noconfirm yaourt package-query cower
+    pacman -S --noconfirm yaourt package-query cower && \
 
-# TODO switch to rankmirrors since its built in for pacman.
-# Setup pacman to use the fastest mirrors.
-RUN pacman -S reflector --noconfirm && \
+    # TODO switch to rankmirrors since its built in for pacman.
+    # Setup pacman to use the fastest mirrors.
+    pacman -S reflector --noconfirm && \
     reflector --verbose -l 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist && \
-    pacman -Rs reflector --noconfirm
+    pacman -Rs reflector --noconfirm && \
 
-# Create new account that isn't root. user: docker password: docker
-RUN useradd --create-home docker && \
+    # Create new account that isn't root. user: docker password: docker
+    useradd --create-home docker && \
     echo -e "docker\ndocker" | passwd docker && \
 
     # Allow passwordedless sudo for now but we will remove it later.
@@ -89,11 +89,11 @@ RUN useradd --create-home docker && \
 
     # Configure localepurge
     sed -i "s/NEEDSCONFIGFIRST/#NEEDSCONFIGFIRST/" /etc/locale.nopurge && \
-    sed -i "s/#DONTBOTHERNEWLOCALE/DONTBOTHERNEWLOCALE/" /etc/locale.nopurge
+    sed -i "s/#DONTBOTHERNEWLOCALE/DONTBOTHERNEWLOCALE/" /etc/locale.nopurge && \
 
-# Reinstall openssl without a Perl dependency (This really isn't needed. Seriously)
+    # Reinstall openssl without a Perl dependency (This really isn't needed. Seriously)
     # Patch makepkg so we can run as it as root.
-RUN sed -i 's/EUID == 0/EUID == -1/' /usr/bin/makepkg && \
+    sed -i 's/EUID == 0/EUID == -1/' /usr/bin/makepkg && \
         wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ssl3-test-failure.patch?h=packages/openssl" && \
         wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ca-dir.patch?h=packages/openssl" && \
         wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/no-rpath.patch?h=packages/openssl" && \
@@ -103,10 +103,10 @@ RUN sed -i 's/EUID == 0/EUID == -1/' /usr/bin/makepkg && \
         makepkg --noconfirm -si --skippgpcheck && \
 
     # Unpatch makepkg
-    sed -i 's/EUID == -1/EUID == 0/' /usr/bin/makepkg
+    sed -i 's/EUID == -1/EUID == 0/' /usr/bin/makepkg && \
 
-# Remove stuff we used for compliling packages since huge (219 mB)
-RUN pacman --noconfirm -Runs  \
+    # Remove stuff we used for compliling packages since huge (219 mB)
+    pacman --noconfirm -Runs  \
     binutils  \
     gcc \
     make \
@@ -134,23 +134,23 @@ RUN pacman --noconfirm -Runs  \
     procps-ng \
 
     # .73 MB
-    iputils
+    iputils && \
 
-# Remove stuff that still needs subitems
-RUN pacman --noconfirm -R \
+    # Remove stuff that still needs subitems
+    pacman --noconfirm -R \
     util-linux \
     shadow \
-    fakeroot
+    fakeroot && \
 
 
-# Remove ducktape & shim & leftover mirrorstatus.
- RUN rm -r /.ducktape /.shim && \
-     rm /tmp/.root.mirrorstatus.json
+    # Remove ducktape & shim & leftover mirrorstatus.
+     rm -r /.ducktape /.shim && \
+     rm /tmp/.root.mirrorstatus.json && \
 
 ##########################################################################
 # CLEAN UP SECTION - THIS GOES AT THE END                                #
 ##########################################################################
-RUN localepurge && \
+    localepurge && \
 
     # Remove info, man and docs
     rm -r /usr/share/info/* && \
@@ -168,9 +168,9 @@ RUN localepurge && \
     find /usr/share/terminfo/. ! -name "*xterm*" ! -name "*screen*" ! -name "*screen*" -type f -delete && \
 
     # Remove anything left in temp.
-    rm -r /tmp/*
+    rm -r /tmp/* && \
 
-RUN pacman -S --noconfirm awk && \
+    pacman -S --noconfirm awk && \
     bash -c "echo 'y' | pacman -Scc >/dev/null 2>&1" && \
     paccache -rk0 >/dev/null 2>&1 &&  \
     pacman-optimize && \
