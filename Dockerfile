@@ -144,7 +144,7 @@ RUN pacman -Syyu --noconfirm && \
 
 
     # Remove ducktape & shim & leftover mirrorstatus.
-     rm -r /.ducktape /.shim && \
+     # rm -r /.ducktape /.shim && \
      rm /tmp/.root.mirrorstatus.json && \
 
 ##########################################################################
