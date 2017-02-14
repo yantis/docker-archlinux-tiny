@@ -33,6 +33,9 @@ But you could swap out a few things for the busybox version of them and reduce t
 * cower and package-query for interacting with the AUR. 
 * compact (removal of a lot of unneeded stuff that pacman will auto re-install if needed)
 
+2/13/2017 Fixed it to make it work again. It is bigger than it used to be as it
+uses the default SSL which has perl installed.
+
 7/2/2016 added but currently not taking advantage of it
 [Amylum] (https://github.com/amylum/repo) Arch packages primarily compiled statically and built against musl
 

@@ -80,46 +80,46 @@ RUN pacman -Syyu --noconfirm && \
 
     # Replace texinfo with a fake textinfo so we can remove Perl
 
-    pacman --noconfirm -S wget file patch binutils gcc autoconf make fakeroot && \
-    runuser -l docker -c "yaourt --noconfirm -Rdd texinfo" && \
-    runuser -l docker -c "yaourt --noconfirm -S texinfo-fake" && \
+    # pacman --noconfirm -S wget file patch binutils gcc autoconf make fakeroot && \
+    # runuser -l docker -c "yaourt --noconfirm -Rdd texinfo" && \
+    # runuser -l docker -c "yaourt --noconfirm -S texinfo-fake" && \
 
     # Install localepurge
-    runuser -l docker -c "yaourt --noconfirm -S localepurge" && \
+    #runuser -l docker -c "yaourt --noconfirm -S localepurge" && \
 
     # Configure localepurge
-    sed -i "s/NEEDSCONFIGFIRST/#NEEDSCONFIGFIRST/" /etc/locale.nopurge && \
-    sed -i "s/#DONTBOTHERNEWLOCALE/DONTBOTHERNEWLOCALE/" /etc/locale.nopurge && \
+    #sed -i "s/NEEDSCONFIGFIRST/#NEEDSCONFIGFIRST/" /etc/locale.nopurge && \
+    #sed -i "s/#DONTBOTHERNEWLOCALE/DONTBOTHERNEWLOCALE/" /etc/locale.nopurge && \
 
     # Reinstall openssl without a Perl dependency (This really isn't needed. Seriously)
     # Patch makepkg so we can run as it as root.
-    sed -i 's/EUID == 0/EUID == -1/' /usr/bin/makepkg && \
-        wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ssl3-test-failure.patch?h=packages/openssl" && \
-        wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ca-dir.patch?h=packages/openssl" && \
-        wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/no-rpath.patch?h=packages/openssl" && \
-        wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/PKGBUILD?h=packages/openssl" && \
-        sed -i "s/depends=('perl')/depends=('pacman')/" PKGBUILD && \
-        sed -i "s/make test//" PKGBUILD && \
-        makepkg --noconfirm -si --skippgpcheck && \
+    # sed -i 's/EUID == 0/EUID == -1/' /usr/bin/makepkg && \
+    #     wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ssl3-test-failure.patch?h=packages/openssl" && \
+    #     wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/ca-dir.patch?h=packages/openssl" && \
+    #     wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/no-rpath.patch?h=packages/openssl" && \
+    #     wget --content-disposition "https://git.archlinux.org/svntogit/packages.git/plain/trunk/PKGBUILD?h=packages/openssl" && \
+    #     sed -i "s/depends=('perl')/depends=('pacman')/" PKGBUILD && \
+    #     sed -i "s/make test//" PKGBUILD && \
+    #     makepkg --noconfirm -si --skippgpcheck && \
 
     # Unpatch makepkg
-    sed -i 's/EUID == -1/EUID == 0/' /usr/bin/makepkg && \
+    # sed -i 's/EUID == -1/EUID == 0/' /usr/bin/makepkg && \
 
     # Remove stuff we used for compliling packages since huge (219 mB)
     pacman --noconfirm -Runs  \
-    binutils  \
-    gcc \
-    make \
-    autoconf \
-    perl \
+    # binutils  \
+    # gcc \
+    # make \
+    # autoconf \
+    # perl \
     yaourt \
     diffutils \
 
     # Remove other stuff
     gzip \
-    wget \
-    file \
-    patch \
+    # wget \
+    # file \
+    # patch \
     sudo \
     gettext \
     less \
@@ -139,18 +139,18 @@ RUN pacman -Syyu --noconfirm && \
     # Remove stuff that still needs subitems
     pacman --noconfirm -R \
     util-linux \
-    shadow \
-    fakeroot && \
+    # fakeroot \
+    shadow && \
 
 
     # Remove ducktape & shim & leftover mirrorstatus.
-     rm -r /.ducktape /.shim && \
+     # rm -r /.ducktape /.shim && \
      rm /tmp/.root.mirrorstatus.json && \
 
 ##########################################################################
 # CLEAN UP SECTION - THIS GOES AT THE END                                #
 ##########################################################################
-    localepurge && \
+    # localepurge && \
 
     # Remove info, man and docs
     rm -r /usr/share/info/* && \
