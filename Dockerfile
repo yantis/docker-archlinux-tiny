@@ -80,16 +80,16 @@ RUN pacman -Syyu --noconfirm && \
 
     # Replace texinfo with a fake textinfo so we can remove Perl
 
-    # pacman --noconfirm -S wget file patch binutils gcc autoconf make fakeroot && \
+    pacman --noconfirm -S wget file patch binutils gcc autoconf make fakeroot && \
     # runuser -l docker -c "yaourt --noconfirm -Rdd texinfo" && \
     # runuser -l docker -c "yaourt --noconfirm -S texinfo-fake" && \
 
     # Install localepurge
-    #runuser -l docker -c "yaourt --noconfirm -S localepurge" && \
+    runuser -l docker -c "yaourt --noconfirm -S localepurge" && \
 
     # Configure localepurge
-    #sed -i "s/NEEDSCONFIGFIRST/#NEEDSCONFIGFIRST/" /etc/locale.nopurge && \
-    #sed -i "s/#DONTBOTHERNEWLOCALE/DONTBOTHERNEWLOCALE/" /etc/locale.nopurge && \
+    sed -i "s/NEEDSCONFIGFIRST/#NEEDSCONFIGFIRST/" /etc/locale.nopurge && \
+    sed -i "s/#DONTBOTHERNEWLOCALE/DONTBOTHERNEWLOCALE/" /etc/locale.nopurge && \
 
     # Reinstall openssl without a Perl dependency (This really isn't needed. Seriously)
     # Patch makepkg so we can run as it as root.
@@ -107,10 +107,10 @@ RUN pacman -Syyu --noconfirm && \
 
     # Remove stuff we used for compliling packages since huge (219 mB)
     pacman --noconfirm -Runs  \
-    # binutils  \
-    # gcc \
-    # make \
-    # autoconf \
+    binutils  \
+    gcc \
+    make \
+    autoconf \
     # perl \
     yaourt \
     diffutils \
@@ -139,7 +139,7 @@ RUN pacman -Syyu --noconfirm && \
     # Remove stuff that still needs subitems
     pacman --noconfirm -R \
     util-linux \
-    # fakeroot \
+    fakeroot \
     shadow && \
 
 
@@ -150,7 +150,7 @@ RUN pacman -Syyu --noconfirm && \
 ##########################################################################
 # CLEAN UP SECTION - THIS GOES AT THE END                                #
 ##########################################################################
-    # localepurge && \
+    localepurge && \
 
     # Remove info, man and docs
     rm -r /usr/share/info/* && \
